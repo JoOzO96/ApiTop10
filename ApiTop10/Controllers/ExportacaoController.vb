@@ -146,7 +146,7 @@ Namespace Controllers
         End Function
 
         ' POST: api/Exportacao
-        Public Sub PostValue(<FromBody()> ByVal value As Object)
+        Public Function PostValue(<FromBody()> ByVal value As Object) As ControleCodigo
             If value IsNot Nothing Then
 
 
@@ -158,6 +158,7 @@ Namespace Controllers
                 Dim insert As String
                 Dim grupo = New Grupo
                 Dim produto = New Produto
+                Dim controleCodigo = New ControleCodigo
                 Dim listaexportacao As List(Of Exportacao)
                 listaexportacao = JsonConvert.DeserializeObject(Of List(Of Exportacao))(json)
 
@@ -179,63 +180,66 @@ Namespace Controllers
                     Dim numerodelinhas = comando.ExecuteNonQuery()
                     ds = Nothing
                     ds = New DataSet
-                    comando = New OleDbCommand("SELECT TOP 1 * from Exportacao ORDER BY ID DESC", dados)
+                    comando = New OleDbCommand("SELECT TOP 1 * from ExportacaoControle ORDER BY ID DESC", dados)
                     da = New OleDbDataAdapter(comando)
                     da.Fill(ds, "Exportacao")
 
-                    For j = 0 To listaexportacao(i).Grupos.Count - 1
+                    'For j = 0 To listaexportacao(i).Grupos.Count - 1
 
-                        grupo = listaexportacao(i).Grupos(j)
-                        grupo.Idexportacao = ds.Tables(0).Rows(0)("id")
-                        insert = RetornaInsert(fieldListGrupo, grupo, "ExportacaoGrupo")
-                        insert = insert.Replace("códgrupo", "[Cód Grupo]")
-                        insert = insert.Replace("comissão", "[Comissão]")
-                        comando = New OleDbCommand(insert, dados)
-                        numerodelinhas = comando.ExecuteNonQuery()
+                    '    grupo = listaexportacao(i).Grupos(j)
+                    '    grupo.Idexportacao = ds.Tables(0).Rows(0)("id")
+                    '    insert = RetornaInsert(fieldListGrupo, grupo, "ExportacaoGrupo")
+                    '    insert = insert.Replace("códgrupo", "[Cód Grupo]")
+                    '    insert = insert.Replace("comissão", "[Comissão]")
+                    '    comando = New OleDbCommand(insert, dados)
+                    '    numerodelinhas = comando.ExecuteNonQuery()
 
-                    Next
+                    'Next
 
-                    For j = 0 To listaexportacao(i).Produtos.Count - 1
+                    'For j = 0 To listaexportacao(i).Produtos.Count - 1
 
-                        produto = listaexportacao(i).Produtos(j)
-                        produto.idexportacao = ds.Tables(0).Rows(0)("id")
-                        insert = RetornaInsert(fieldListProduto, produto, "ExportacaoProduto")
-                        insert = insert.Replace("codproduto", "[Cod Produto]")
-                        insert = insert.Replace("número,", "[Número],")
-                        insert = insert.Replace("codfornecedor,", "[Cod Fornecedor],")
-                        insert = insert.Replace("valorcompra,", "[Valor Compra],")
-                        insert = insert.Replace("valoravista,", "[Valor Avista],")
-                        insert = insert.Replace("valorprazo,", "[Valor Prazo],")
-                        insert = insert.Replace("codgrupo,", "[Cod Grupo],")
-                        insert = insert.Replace("codicms,", "[Cod Icms],")
-                        insert = insert.Replace(",dificms,", ",[Dif ICMS],")
-                        insert = insert.Replace("perprazo,", "[Per Prazo],")
-                        insert = insert.Replace("códsubgrupo,", "[Cód SubGrupo],")
-                        insert = insert.Replace("maximo,", "[Máximo],")
-                        insert = insert.Replace("comissão,", "[Comissão],")
-                        insert = insert.Replace("códpis,", "[CódPIS],")
-                        insert = insert.Replace("códcofins,", "[CódCOFINS],")
-                        insert = insert.Replace("códipi,", "[CódIPI],")
-                        insert = insert.Replace("carência,", "[Carência],")
-                        insert = insert.Replace("aplicação,", "[Aplicação],")
-                        insert = insert.Replace("concentração,", "[Concentração],")
-                        insert = insert.Replace("formulação,", "[Formulação],")
-                        insert = insert.Replace("comentário,", "[Comentário],")
-                        insert = insert.Replace("códsubgrupo,", "[CódSubGrupo],")
-                        insert = insert.Replace("códpise,", "[CódPisE],")
-                        insert = insert.Replace("códcofinse,", "[CódCOFINSE],")
-                        insert = insert.Replace("códipise,", "[CódIPISE],")
-                        insert = insert.Replace("máquina,", "[Máquina],")
-                        insert = insert.Replace("códproduto,", "[Cód Produto],")
-                        comando = New OleDbCommand(insert, dados)
-                        numerodelinhas = comando.ExecuteNonQuery()
+                    '    produto = listaexportacao(i).Produtos(j)
+                    '    produto.idexportacao = ds.Tables(0).Rows(0)("id")
+                    '    insert = RetornaInsert(fieldListProduto, produto, "ExportacaoProduto")
+                    '    insert = insert.Replace("codproduto", "[Cod Produto]")
+                    '    insert = insert.Replace("número,", "[Número],")
+                    '    insert = insert.Replace("codfornecedor,", "[Cod Fornecedor],")
+                    '    insert = insert.Replace("valorcompra,", "[Valor Compra],")
+                    '    insert = insert.Replace("valoravista,", "[Valor Avista],")
+                    '    insert = insert.Replace("valorprazo,", "[Valor Prazo],")
+                    '    insert = insert.Replace("codgrupo,", "[Cod Grupo],")
+                    '    insert = insert.Replace("codicms,", "[Cod Icms],")
+                    '    insert = insert.Replace(",dificms,", ",[Dif ICMS],")
+                    '    insert = insert.Replace("perprazo,", "[Per Prazo],")
+                    '    insert = insert.Replace("códsubgrupo,", "[Cód SubGrupo],")
+                    '    insert = insert.Replace("maximo,", "[Máximo],")
+                    '    insert = insert.Replace("comissão,", "[Comissão],")
+                    '    insert = insert.Replace("códpis,", "[CódPIS],")
+                    '    insert = insert.Replace("códcofins,", "[CódCOFINS],")
+                    '    insert = insert.Replace("códipi,", "[CódIPI],")
+                    '    insert = insert.Replace("carência,", "[Carência],")
+                    '    insert = insert.Replace("aplicação,", "[Aplicação],")
+                    '    insert = insert.Replace("concentração,", "[Concentração],")
+                    '    insert = insert.Replace("formulação,", "[Formulação],")
+                    '    insert = insert.Replace("comentário,", "[Comentário],")
+                    '    insert = insert.Replace("códsubgrupo,", "[CódSubGrupo],")
+                    '    insert = insert.Replace("códpise,", "[CódPisE],")
+                    '    insert = insert.Replace("códcofinse,", "[CódCOFINSE],")
+                    '    insert = insert.Replace("códipise,", "[CódIPISE],")
+                    '    insert = insert.Replace("máquina,", "[Máquina],")
+                    '    insert = insert.Replace("códproduto,", "[Cód Produto],")
+                    '    comando = New OleDbCommand(insert, dados)
+                    '    numerodelinhas = comando.ExecuteNonQuery()
 
-                    Next
+                    'Next
+
+                    controleCodigo.codigo = ds.Tables(0).Rows(0)("id")
                 Next
-
                 dados.Close()
+                Return controleCodigo
             End If
-        End Sub
+            Return ""
+        End Function
 
         ' PUT: api/Exportacao/5
         Public Sub PutValue(ByVal id As Integer, <FromBody()> ByVal value As String)

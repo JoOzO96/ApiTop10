@@ -163,6 +163,8 @@
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\WebApiConfig.vb" />
+    <Compile Include="App_Start\WebApiConfig2.vb" />
+    <Compile Include="App_Start\WebApiConfig3.vb" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.vb" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.vb" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.vb" />
@@ -192,9 +194,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
     <Compile Include="Controllers\ExportacaoController.vb" />
+    <Compile Include="Controllers\GrupoController.vb" />
+    <Compile Include="Controllers\ProdutoController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ControleCodigo.vb" />
     <Compile Include="Models\Exportacao.vb" />
     <Compile Include="Models\Grupo.vb" />
     <Compile Include="Models\Produto.vb" />
